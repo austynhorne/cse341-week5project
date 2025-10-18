@@ -1,0 +1,171 @@
+### LOCALHOST TESTS ###
+
+# --- FISH ROUTES ---
+
+GET http://localhost:8080/api/fish
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/fish/
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/fish
+Content-Type: application/json
+
+{
+  "species": "Rainbow Trout",
+  "river": "Provo River",
+  "weightOz": 12,
+  "notes": "Dry fly",
+  "method": "Fly Fishing",
+  "user": "testuser@gmail.com",
+  "dateCaught": "2025-10-18"
+}
+
+###
+
+PUT http://localhost:8080/api/fish/
+Content-Type: application/json
+
+{
+  "species": "Brown Trout",
+  "river": "Provo River",
+  "weightOz": 14,
+  "notes": "Wet fly",
+  "method": "Fly Fishing",
+  "user": "testuser@gmail.com",
+  "dateCaught": "2025-10-18"
+}
+
+###
+
+DELETE http://localhost:8080/api/fish/
+
+###
+
+# --- USER ROUTES ---
+
+GET http://localhost:8080/api/users
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/users/
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "name": "Austyn Horne",
+  "email": "testuser@gmail.com",
+  "role": "angler",
+  "oauthProvider": "google"
+}
+
+###
+
+PUT http://localhost:8080/api/users/
+Content-Type: application/json
+
+{
+  "name": "Austyn Horne",
+  "email": "updateduser@gmail.com",
+  "role": "angler",
+  "oauthProvider": "google"
+}
+
+###
+
+DELETE http://localhost:8080/api/users/
+
+### RENDER DEPLOYMENT TESTS ###
+
+# --- FISH ROUTES ---
+
+GET https://cse341-week5project.onrender.com/api/fish
+Accept: application/json
+
+###
+
+GET https://cse341-week5project.onrender.com/api/fish/
+Accept: application/json
+
+###
+
+POST https://cse341-week5project.onrender.com/api/fish
+Content-Type: application/json
+
+{
+  "species": "Rainbow Trout",
+  "river": "Provo River",
+  "weightOz": 12,
+  "notes": "Dry fly",
+  "method": "Fly Fishing",
+  "user": "testuser@gmail.com",
+  "dateCaught": "2025-10-18"
+}
+
+###
+
+PUT https://cse341-week5project.onrender.com/api/fish/
+Content-Type: application/json
+
+{
+  "species": "Brown Trout",
+  "river": "Provo River",
+  "weightOz": 14,
+  "notes": "Wet fly",
+  "method": "Fly Fishing",
+  "user": "testuser@gmail.com",
+  "dateCaught": "2025-10-18"
+}
+
+###
+
+DELETE https://cse341-week5project.onrender.com/api/fish/
+
+###
+
+# --- USER ROUTES ---
+
+GET https://cse341-week5project.onrender.com/api/users
+Accept: application/json
+
+###
+
+GET https://cse341-week5project.onrender.com/api/users/
+Accept: application/json
+
+###
+
+POST https://cse341-week5project.onrender.com/api/users
+Content-Type: application/json
+
+{
+  "name": "Austyn Horne",
+  "email": "testuser@gmail.com",
+  "role": "angler",
+  "oauthProvider": "google"
+}
+
+###
+
+PUT https://cse341-week5project.onrender.com/api/users/
+Content-Type: application/json
+
+{
+  "name": "Austyn Horne",
+  "email": "updateduser@gmail.com",
+  "role": "angler",
+  "oauthProvider": "google"
+}
+
+###
+
+DELETE https://cse341-week5project.onrender.com/api/users/
