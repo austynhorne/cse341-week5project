@@ -28,12 +28,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Root
+// #swagger.ignore = true
 app.get('/', (req, res) => res.send('Fly Fishing API'));
 
 // OAuth routes
+// #swagger.ignore = true
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Redirect to homepage after login
+// #swagger.ignore = true
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
