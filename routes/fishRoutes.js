@@ -12,9 +12,10 @@ const fishValidators = [
   body('species').trim().notEmpty().withMessage('species is required'),
   body('river').trim().notEmpty().withMessage('river is required'),
   body('weightOz').isNumeric().withMessage('weightOz must be a number'),
-  body('lengthIn').optional().isNumeric().withMessage('lengthIn must be a number'),
-  body('lureUsed').optional().isString(),
-  body('caughtBy').optional().isString()
+  body('lengthIn').isNumeric().withMessage('lengthIn must be a number'),
+  body('lureUsed').trim().notEmpty().withMessage('lureUsed is required'),
+  body('caughtBy').isMongoId().withMessage('caughtBy must be a valid user ID'),
+  body('notes').optional().isString()
 ];
 
 // GET all fish

@@ -6,9 +6,12 @@ const User = require('../models/User');
 const router = express.Router();
 
 const userValidators = [
-  body('name').trim().notEmpty().withMessage('name is required'),
+  body('username').trim().notEmpty().withMessage('username is required'),
   body('email').isEmail().withMessage('valid email is required'),
-  body('oauthProvider').optional().isString()
+  body('oauthProvider').trim().notEmpty().withMessage('oauthProvider is required'),
+  body('oauthId').trim().notEmpty().withMessage('oauthId is required'),
+  body('profilePic').optional().isString(),
+  body('favoriteSpecies').optional().isString()
 ];
 
 // GET all users
