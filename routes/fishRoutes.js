@@ -5,9 +5,6 @@ const Fish = require('../models/Fish');
 
 const router = express.Router();
 
-
-// Validation rules for creating/updating fish
-
 const fishValidators = [
   body('species').trim().notEmpty().withMessage('species is required'),
   body('river').trim().notEmpty().withMessage('river is required'),
@@ -18,7 +15,6 @@ const fishValidators = [
   body('notes').optional().isString()
 ];
 
-// GET all fish
 router.get('/', async (req, res, next) => {
   try {
     const fish = await Fish.find();
@@ -26,7 +22,6 @@ router.get('/', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET by ID
 router.get('/:id',
   param('id').isMongoId().withMessage('Invalid id'),
   handleValidationErrors,
@@ -39,7 +34,30 @@ router.get('/:id',
   }
 );
 
-// POST create (protected in your app by auth middleware if needed)
+// #swagger.tags = ['Fish']
+// #swagger.description = 'Create a new fish record'
+/* #swagger.parameters['body'] = {
+  in: 'body',
+  description: 'Fish data',
+  required: true,
+  schema: {
+    $species: 'Rainbow Trout',
+    $river: 'Provo River',
+    $weightOz: 12,
+    $lengthIn: 10,
+    $lureUsed: 'Dry fly',
+    $caughtBy: '507f1f77bcf86cd799439011',
+    notes: 'Optional notes'
+  }
+} */
+/* #swagger.responses[201] = {
+  description: 'Fish created',
+  schema: { $ref: '#/definitions/Fish' }
+} */
+/* #swagger.responses[400] = {
+  description: 'Validation error',
+  schema: { $ref: '#/definitions/Error' }
+} */
 router.post('/', fishValidators, handleValidationErrors, async (req, res, next) => {
   try {
     const newFish = new Fish(req.body);
@@ -48,7 +66,6 @@ router.post('/', fishValidators, handleValidationErrors, async (req, res, next) 
   } catch (err) { next(err); }
 });
 
-// PUT update
 router.put('/:id',
   param('id').isMongoId().withMessage('Invalid id'),
   fishValidators,
@@ -62,7 +79,6 @@ router.put('/:id',
   }
 );
 
-// DELETE
 router.delete('/:id',
   param('id').isMongoId().withMessage('Invalid id'),
   handleValidationErrors,

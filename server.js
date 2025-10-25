@@ -55,7 +55,7 @@ try {
 } catch (err) {
   console.warn('swagger.json missing');
 }
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Regenerate swagger docs on startup for production
 if (process.env.NODE_ENV === 'production' || process.env.RENDER_EXTERNAL_URL) {

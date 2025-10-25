@@ -19,30 +19,30 @@ Content-Type: application/json
   "species": "Rainbow Trout",
   "river": "Provo River",
   "weightOz": 12,
-  "notes": "Dry fly",
-  "method": "Fly Fishing",
-  "user": "testuser@gmail.com",
-  "dateCaught": "2025-10-18"
+  "lengthIn": 10,
+  "lureUsed": "Dry fly",
+  "caughtBy": "507f1f77bcf86cd799439011",
+  "notes": "Dry fly"
 }
 
 ###
 
-PUT http://localhost:8080/api/fish/
+PUT http://localhost:8080/api/fish/507f1f77bcf86cd799439011
 Content-Type: application/json
 
 {
   "species": "Brown Trout",
   "river": "Provo River",
   "weightOz": 14,
-  "notes": "Wet fly",
-  "method": "Fly Fishing",
-  "user": "testuser@gmail.com",
-  "dateCaught": "2025-10-18"
+  "lengthIn": 12,
+  "lureUsed": "Wet fly",
+  "caughtBy": "507f1f77bcf86cd799439011",
+  "notes": "Wet fly"
 }
 
 ###
 
-DELETE http://localhost:8080/api/fish/
+DELETE http://localhost:8080/api/fish/507f1f77bcf86cd799439011
 
 ###
 
@@ -62,27 +62,31 @@ POST http://localhost:8080/api/users
 Content-Type: application/json
 
 {
-  "name": "Austyn Horne",
+  "username": "Austyn Horne",
   "email": "testuser@gmail.com",
-  "role": "angler",
-  "oauthProvider": "google"
+  "oauthProvider": "google",
+  "oauthId": "123456789",
+  "profilePic": "https://example.com/pic.jpg",
+  "favoriteSpecies": "Rainbow Trout"
 }
 
 ###
 
-PUT http://localhost:8080/api/users/
+PUT http://localhost:8080/api/users/507f1f77bcf86cd799439011
 Content-Type: application/json
 
 {
-  "name": "Austyn Horne",
+  "username": "Austyn Horne",
   "email": "updateduser@gmail.com",
-  "role": "angler",
-  "oauthProvider": "google"
+  "oauthProvider": "google",
+  "oauthId": "123456789",
+  "profilePic": "https://example.com/pic.jpg",
+  "favoriteSpecies": "Rainbow Trout"
 }
 
 ###
 
-DELETE http://localhost:8080/api/users/
+DELETE http://localhost:8080/api/users/507f1f77bcf86cd799439011
 
 ### RENDER DEPLOYMENT TESTS ###
 
@@ -105,30 +109,30 @@ Content-Type: application/json
   "species": "Rainbow Trout",
   "river": "Provo River",
   "weightOz": 12,
-  "notes": "Dry fly",
-  "method": "Fly Fishing",
-  "user": "testuser@gmail.com",
-  "dateCaught": "2025-10-18"
+  "lengthIn": 10,
+  "lureUsed": "Dry fly",
+  "caughtBy": "507f1f77bcf86cd799439011",
+  "notes": "Dry fly"
 }
 
 ###
 
-PUT https://cse341-week5project.onrender.com/api/fish/
+PUT https://cse341-week5project.onrender.com/api/fish/507f1f77bcf86cd799439011
 Content-Type: application/json
 
 {
   "species": "Brown Trout",
   "river": "Provo River",
   "weightOz": 14,
-  "notes": "Wet fly",
-  "method": "Fly Fishing",
-  "user": "testuser@gmail.com",
-  "dateCaught": "2025-10-18"
+  "lengthIn": 12,
+  "lureUsed": "Wet fly",
+  "caughtBy": "507f1f77bcf86cd799439011",
+  "notes": "Wet fly"
 }
 
 ###
 
-DELETE https://cse341-week5project.onrender.com/api/fish/
+DELETE https://cse341-week5project.onrender.com/api/fish/507f1f77bcf86cd799439011
 
 ###
 
@@ -148,15 +152,17 @@ POST https://cse341-week5project.onrender.com/api/users
 Content-Type: application/json
 
 {
-  "name": "Austyn Horne",
+  "username": "Austyn Horne",
   "email": "testuser@gmail.com",
-  "role": "angler",
-  "oauthProvider": "google"
+  "oauthProvider": "google",
+  "oauthId": "123456789",
+  "profilePic": "https://example.com/pic.jpg",
+  "favoriteSpecies": "Rainbow Trout"
 }
 
 ###
 
-PUT https://cse341-week5project.onrender.com/api/users/
+PUT https://cse341-week5project.onrender.com/api/users/507f1f77bcf86cd799439011
 Content-Type: application/json
 
 {
@@ -168,4 +174,4 @@ Content-Type: application/json
 
 ###
 
-DELETE https://cse341-week5project.onrender.com/api/users/
+DELETE https://cse341-week5project.onrender.com/api/users/507f1f77bcf86cd799439011

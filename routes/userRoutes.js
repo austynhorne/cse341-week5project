@@ -31,13 +31,35 @@ router.get('/:id', param('id').isMongoId().withMessage('Invalid id'), handleVali
   } catch (err) { next(err); }
 });
 
-// POST create user
+// #swagger.tags = ['Users']
+// #swagger.description = 'Create a new user record'
+/* #swagger.parameters['body'] = {
+  in: 'body',
+  description: 'User data',
+  required: true,
+  schema: {
+    $username: 'angler123',
+    $email: 'user@example.com',
+    $oauthProvider: 'google',
+    $oauthId: '123456789',
+    profilePic: 'https://example.com/pic.jpg',
+    favoriteSpecies: 'Rainbow Trout'
+  }
+} */
+/* #swagger.responses[201] = {
+  description: 'User created',
+  schema: { $ref: '#/definitions/User' }
+} */
+/* #swagger.responses[400] = {
+  description: 'Validation error or email already exists',
+  schema: { $ref: '#/definitions/Error' }
+} */
 router.post('/', userValidators, handleValidationErrors, async (req, res, next) => {
   try {
     const user = new User(req.body);
     const saved = await user.save();
     res.status(201).json(saved);
-  } catch (err) { 
+  } catch (err) {
     if (err.code === 11000) return res.status(400).json({ error: 'Email already exists' });
     next(err);
   }
