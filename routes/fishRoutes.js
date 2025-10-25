@@ -1,73 +1,77 @@
 const express = require('express');
+const { body, param } = require('express-validator');
+const { handleValidationErrors } = require('../middleware/validation');
+const Fish = require('../models/Fish');
+
 const router = express.Router();
-const mongoose = require('mongoose');
 
-const fishSchema = new mongoose.Schema({
-  species: { type: String, required: true },
-  river: { type: String, required: true },
-  weightOz: { type: Number, required: true },
-  notes: { type: String },
-  dateCaught: { type: Date, default: Date.now },
-  method: { type: String },
-  user: { type: String } // email from OAuth
-});
 
-const Fish = mongoose.model('Fish', fishSchema);
+// Validation rules for creating/updating fish
+
+const fishValidators = [
+  body('species').trim().notEmpty().withMessage('species is required'),
+  body('river').trim().notEmpty().withMessage('river is required'),
+  body('weightOz').isNumeric().withMessage('weightOz must be a number'),
+  body('lengthIn').optional().isNumeric().withMessage('lengthIn must be a number'),
+  body('lureUsed').optional().isString(),
+  body('caughtBy').optional().isString()
+];
 
 // GET all fish
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
-    const allFish = await Fish.find();
-    res.json(allFish);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// GET fish by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const fish = await Fish.findById(req.params.id);
-    if (!fish) return res.status(404).json({ message: 'Fish not found' });
+    const fish = await Fish.find();
     res.json(fish);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+  } catch (err) { next(err); }
 });
 
-// POST new fish
-router.post('/', async (req, res) => {
-  const { species, river, weightOz, notes, method, user } = req.body;
-  if (!species || !river || !weightOz) return res.status(400).json({ message: 'species, river, and weightOz are required' });
-  const newFish = new Fish({ species, river, weightOz, notes, method, user });
-  try {
-    const savedFish = await newFish.save();
-    res.status(201).json(savedFish);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+// GET by ID
+router.get('/:id',
+  param('id').isMongoId().withMessage('Invalid id'),
+  handleValidationErrors,
+  async (req, res, next) => {
+    try {
+      const f = await Fish.findById(req.params.id);
+      if (!f) return res.status(404).json({ error: 'Fish not found' });
+      res.json(f);
+    } catch (err) { next(err); }
   }
+);
+
+// POST create (protected in your app by auth middleware if needed)
+router.post('/', fishValidators, handleValidationErrors, async (req, res, next) => {
+  try {
+    const newFish = new Fish(req.body);
+    const saved = await newFish.save();
+    res.status(201).json(saved);
+  } catch (err) { next(err); }
 });
 
-// PUT update fish by ID
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedFish = await Fish.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-    if (!updatedFish) return res.status(404).json({ message: 'Fish not found' });
-    res.json(updatedFish);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+// PUT update
+router.put('/:id',
+  param('id').isMongoId().withMessage('Invalid id'),
+  fishValidators,
+  handleValidationErrors,
+  async (req, res, next) => {
+    try {
+      const updated = await Fish.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+      if (!updated) return res.status(404).json({ error: 'Fish not found' });
+      res.json(updated);
+    } catch (err) { next(err); }
   }
-});
+);
 
-// DELETE fish by ID
-router.delete('/:id', async (req, res) => {
-  try {
-    const deletedFish = await Fish.findByIdAndDelete(req.params.id);
-    if (!deletedFish) return res.status(404).json({ message: 'Fish not found' });
-    res.json({ message: 'Fish deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+// DELETE
+router.delete('/:id',
+  param('id').isMongoId().withMessage('Invalid id'),
+  handleValidationErrors,
+  async (req, res, next) => {
+    try {
+      const deleted = await Fish.findByIdAndDelete(req.params.id);
+      if (!deleted) return res.status(404).json({ error: 'Fish not found' });
+      res.json({ message: 'Fish deleted' });
+    } catch (err) { next(err); }
   }
-});
+);
 
 module.exports = router;

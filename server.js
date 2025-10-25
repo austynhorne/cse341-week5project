@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
-require('./passport-config'); // OAuth setup
+require('./passport-config');
 const fishRoutes = require('./routes/fishRoutes');
 const userRoutes = require('./routes/userRoutes');
 const swaggerUi = require('swagger-ui-express');
@@ -34,7 +34,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/'); // <-- Redirects to homepage instead of JSON
+    res.redirect('/');
   }
 );
 
@@ -60,5 +60,4 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log(`MongoDB connected to DB: ${process.env.DB_NAME || 'default'}`))
 .catch(err => { console.error('DB error', err); process.exit(1); });
 
-// Start server
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
