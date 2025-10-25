@@ -54,6 +54,22 @@ try {
 }
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Regenerate swagger docs on startup for production
+if (process.env.NODE_ENV === 'production' || process.env.RENDER_EXTERNAL_URL) {
+  const { exec } = require('child_process');
+  exec('npm run gen-docs', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error regenerating swagger docs: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`Stderr: ${stderr}`);
+      return;
+    }
+    console.log(`Swagger docs regenerated: ${stdout}`);
+  });
+}
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   dbName: process.env.DB_NAME,
