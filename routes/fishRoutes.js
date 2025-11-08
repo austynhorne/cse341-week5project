@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, param } = require('express-validator');
 const { handleValidationErrors } = require('../middleware/validation');
+const { isAuthenticated } = require('../middleware/authMiddleware');
 const Fish = require('../models/Fish');
 
 const router = express.Router();
@@ -34,31 +35,7 @@ router.get('/:id',
   }
 );
 
-// #swagger.tags = ['Fish']
-// #swagger.description = 'Create a new fish record'
-/* #swagger.parameters['body'] = {
-  in: 'body',
-  description: 'Fish data',
-  required: true,
-  schema: {
-    $species: 'Rainbow Trout',
-    $river: 'Provo River',
-    $weightOz: 12,
-    $lengthIn: 10,
-    $lureUsed: 'Dry fly',
-    $caughtBy: '507f1f77bcf86cd799439011',
-    notes: 'Optional notes'
-  }
-} */
-/* #swagger.responses[201] = {
-  description: 'Fish created',
-  schema: { $ref: '#/definitions/Fish' }
-} */
-/* #swagger.responses[400] = {
-  description: 'Validation error',
-  schema: { $ref: '#/definitions/Error' }
-} */
-router.post('/', fishValidators, handleValidationErrors, async (req, res, next) => {
+router.post('/', isAuthenticated, fishValidators, handleValidationErrors, async (req, res, next) => {
   try {
     const newFish = new Fish(req.body);
     const saved = await newFish.save();
@@ -67,6 +44,7 @@ router.post('/', fishValidators, handleValidationErrors, async (req, res, next) 
 });
 
 router.put('/:id',
+  isAuthenticated,
   param('id').isMongoId().withMessage('Invalid id'),
   fishValidators,
   handleValidationErrors,
@@ -80,6 +58,7 @@ router.put('/:id',
 );
 
 router.delete('/:id',
+  isAuthenticated,
   param('id').isMongoId().withMessage('Invalid id'),
   handleValidationErrors,
   async (req, res, next) => {

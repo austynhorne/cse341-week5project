@@ -1,17 +1,14 @@
 const swaggerAutogen = require('swagger-autogen')();
 
-const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER_EXTERNAL_URL;
-const host = isProduction ? process.env.RENDER_EXTERNAL_URL?.replace('https://', '') || 'cse341-week5project.onrender.com' : 'localhost:8080';
-const schemes = isProduction ? ['https'] : ['http'];
-
 const doc = {
   info: {
     title: 'Fly Fishing API',
     description: 'API for logging fly fishing catches',
     version: '1.0.0'
   },
-  host: host,
-  schemes: schemes,
+  host: 'localhost:8080',
+  schemes: ['http'],
+
   definitions: {
     Fish: {
       type: 'object',

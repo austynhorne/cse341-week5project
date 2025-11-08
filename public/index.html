@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fly Fishing API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Fly Fishing API</h1>
+        <div id="auth-section">
+            <h3>OAuth Login</h3>
+            <button id="login-btn">Login with Google</button>
+            <button id="logout-btn" style="display: none;">Logout</button>
+
+            <h3>Manual Registration/Login</h3>
+            <div id="register-form">
+                <input type="text" id="reg-username" placeholder="Username" required>
+                <input type="email" id="reg-email" placeholder="Email" required>
+                <input type="password" id="reg-password" placeholder="Password (min 6 chars)" required>
+                <input type="text" id="reg-species" placeholder="Favorite Species (optional)">
+                <button id="register-btn">Register</button>
+            </div>
+
+            <div id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button id="manual-login-btn">Login</button>
+            </div>
+
+            <div id="user-info" style="display: none;">
+                <h2>Welcome, <span id="username"></span>!</h2>
+                <p>Role: <span id="user-role"></span></p>
+                <img id="profile-pic" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;">
+                <button id="view-users-btn" style="display: none;">View All Users (Admin)</button>
+            </div>
+        </div>
+
+        <div id="users-section" style="display: none;">
+            <h2>All Users (Admin Only)</h2>
+            <div id="users-list"></div>
+        </div>
+
+        <div id="fish-section" style="display: none;">
+            <h2>Fish Catches</h2>
+            <div id="fish-list"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

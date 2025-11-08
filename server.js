@@ -19,6 +19,7 @@ app.set('trust proxy', 1);
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'flyfishsecret',
   resave: false,
@@ -43,6 +44,25 @@ app.get('/auth/google/callback',
     res.redirect('/');
   }
 );
+
+// Logout route
+// #swagger.ignore = true
+app.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect('/');
+  });
+});
+
+// Get current user
+// #swagger.ignore = true
+app.get('/api/current-user', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json(req.user);
+  } else {
+    res.status(401).json({ error: 'Not authenticated' });
+  }
+});
 
 // REST API routes
 app.use('/api/fish', fishRoutes);
