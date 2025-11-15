@@ -5,13 +5,20 @@
     "description": "API for logging fly fishing catches",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "cse341-week5project.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
+  "securityDefinitions": {
+    "sessionAuth": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "connect.sid"
+    }
+  },
   "paths": {
-    "/api/fish": {
+    "/": {
       "get": {
         "description": "",
         "responses": {
@@ -22,27 +29,20 @@
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Fish"
-            }
-          }
-        ],
         "responses": {
           "201": {
             "description": "Created"
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
     },
-    "/api/fish/{id}": {
+    "/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -73,14 +73,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Fish"
-            }
           }
         ],
         "responses": {
@@ -89,6 +81,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -112,30 +107,41 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           }
         }
       }
     },
-    "/api/users": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
+    "/register": {
       "post": {
         "description": "",
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "type": "object",
+              "properties": {
+                "username": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "profilePic": {
+                  "example": "any"
+                },
+                "favoriteSpecies": {
+                  "example": "any"
+                }
+              }
             }
           }
         ],
@@ -149,44 +155,23 @@
         }
       }
     },
-    "/api/users/{id}": {
-      "get": {
+    "/login": {
+      "post": {
         "description": "",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
             }
           }
         ],
@@ -197,30 +182,24 @@
           "400": {
             "description": "Bad Request"
           },
-          "404": {
-            "description": "Not Found"
+          "401": {
+            "description": "Unauthorized"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/admin/all": {
+      "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
+          "401": {
+            "description": "Unauthorized"
           },
-          "404": {
-            "description": "Not Found"
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -230,87 +209,254 @@
     "Fish": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "species": {
-          "type": "string"
-        },
-        "river": {
-          "type": "string"
-        },
-        "weightOz": {
-          "type": "number"
-        },
-        "lengthIn": {
-          "type": "number"
-        },
-        "lureUsed": {
-          "type": "string"
-        },
-        "catchDate": {
+        "type": {
           "type": "string",
-          "format": "date-time"
+          "example": "object"
         },
-        "notes": {
-          "type": "string"
+        "properties": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "species": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "river": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "weightOz": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                }
+              }
+            },
+            "lengthIn": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                }
+              }
+            },
+            "lureUsed": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "catchDate": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "date-time"
+                }
+              }
+            },
+            "notes": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "caughtBy": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
         },
-        "caughtBy": {
-          "type": "string"
+        "required": {
+          "type": "array",
+          "example": [
+            "species",
+            "river",
+            "weightOz",
+            "lengthIn",
+            "lureUsed",
+            "caughtBy"
+          ],
+          "items": {
+            "type": "string"
+          }
         }
-      },
-      "required": [
-        "species",
-        "river",
-        "weightOz",
-        "lengthIn",
-        "lureUsed",
-        "caughtBy"
-      ]
+      }
     },
     "User": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "oauthProvider": {
-          "type": "string"
-        },
-        "oauthId": {
-          "type": "string"
-        },
-        "profilePic": {
-          "type": "string"
-        },
-        "joinDate": {
+        "type": {
           "type": "string",
-          "format": "date-time"
+          "example": "object"
         },
-        "favoriteSpecies": {
-          "type": "string"
+        "properties": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "username": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "email": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "oauthProvider": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "oauthId": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "profilePic": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "joinDate": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "date-time"
+                }
+              }
+            },
+            "favoriteSpecies": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "role": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "type": "array",
+          "example": [
+            "username",
+            "email",
+            "oauthProvider",
+            "oauthId"
+          ],
+          "items": {
+            "type": "string"
+          }
         }
-      },
-      "required": [
-        "username",
-        "email",
-        "oauthProvider",
-        "oauthId"
-      ]
+      }
     },
     "Error": {
       "type": "object",
       "properties": {
-        "error": {
-          "type": "string"
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
         }
       }
     }
-  }
+  },
+  "security": [
+    {
+      "sessionAuth": []
+    }
+  ]
 }
