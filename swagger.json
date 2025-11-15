@@ -5,10 +5,10 @@
     "description": "API for logging fly fishing catches",
     "version": "1.0.0"
   },
-  "host": "cse341-week5project.onrender.com",
-  "basePath": "/",
+  "host": "localhost:8080",
+  "basePath": "/api",
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "sessionAuth": {

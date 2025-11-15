@@ -11,6 +11,7 @@ const doc = {
     version: '1.0.0'
   },
   host: host,
+  basePath: '/api',
   schemes: schemes,
   securityDefinitions: {
     sessionAuth: {
