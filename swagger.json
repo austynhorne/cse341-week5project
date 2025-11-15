@@ -2,315 +2,180 @@
   "swagger": "2.0",
   "info": {
     "title": "Fly Fishing API",
-    "description": "API for logging fly fishing catches",
+    "description": "API for logging fly fishing catches and managing users.",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "cse341-week5project.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["https"],
+
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Add: Bearer <yourToken>"
+    }
+  },
+
   "paths": {
-    "/api/fish": {
+
+    /* ---------------------------
+       FISH ENDPOINTS (Full CRUD)
+    ---------------------------- */
+
+    "/fish": {
       "get": {
-        "description": "",
+        "description": "Get all fish",
         "responses": {
-          "200": {
-            "description": "OK"
-          }
+          "200": { "description": "OK" }
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a new fish",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Fish"
-            }
+            "schema": { "$ref": "#/definitions/Fish" }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" }
         }
       }
     },
-    "/api/fish/{id}": {
+
+    "/fish/{id}": {
       "get": {
-        "description": "",
+        "description": "Get a single fish by ID",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" }
         }
       },
       "put": {
-        "description": "",
+        "description": "Update a fish",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Fish"
-            }
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "schema": { "$ref": "#/definitions/Fish" } }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "Updated" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" }
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a fish",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "Deleted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" }
         }
       }
     },
-    "/api/users": {
+
+    /* ---------------------------
+       USER ENDPOINTS (Full CRUD)
+    ---------------------------- */
+
+    "/users": {
       "get": {
-        "description": "",
+        "description": "Get all users",
         "responses": {
-          "200": {
-            "description": "OK"
-          }
+          "200": { "description": "OK" }
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a new user",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
+          { "name": "body", "in": "body", "schema": { "$ref": "#/definitions/User" } }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" }
         }
       }
     },
-    "/api/users/{id}": {
+
+    "/users/{id}": {
       "get": {
-        "description": "",
+        "description": "Get a user by ID",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" }
         }
       },
       "put": {
-        "description": "",
+        "description": "Update a user",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "schema": { "$ref": "#/definitions/User" } }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "Updated" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" }
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a user",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "Deleted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" }
         }
       }
     }
   },
+
   "definitions": {
     "Fish": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "species": {
-          "type": "string"
-        },
-        "river": {
-          "type": "string"
-        },
-        "weightOz": {
-          "type": "number"
-        },
-        "lengthIn": {
-          "type": "number"
-        },
-        "lureUsed": {
-          "type": "string"
-        },
-        "catchDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "notes": {
-          "type": "string"
-        },
-        "caughtBy": {
-          "type": "string"
-        }
+        "species": { "type": "string" },
+        "river": { "type": "string" },
+        "weightOz": { "type": "number" },
+        "lengthIn": { "type": "number" },
+        "lureUsed": { "type": "string" },
+        "catchDate": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" },
+        "caughtBy": { "type": "string" }
       },
-      "required": [
-        "species",
-        "river",
-        "weightOz",
-        "lengthIn",
-        "lureUsed",
-        "caughtBy"
-      ]
+      "required": ["species", "river", "weightOz", "lengthIn", "lureUsed", "caughtBy"]
     },
+
     "User": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "oauthProvider": {
-          "type": "string"
-        },
-        "oauthId": {
-          "type": "string"
-        },
-        "profilePic": {
-          "type": "string"
-        },
-        "joinDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "favoriteSpecies": {
-          "type": "string"
-        }
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "profilePic": { "type": "string" },
+        "favoriteSpecies": { "type": "string" },
+        "joinDate": { "type": "string", "format": "date-time" }
       },
-      "required": [
-        "username",
-        "email",
-        "oauthProvider",
-        "oauthId"
-      ]
-    },
-    "Error": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string"
-        }
-      }
+      "required": ["username", "email", "password"]
     }
   }
 }

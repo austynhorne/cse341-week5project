@@ -1,0 +1,2 @@
+- [ ] Edit swagger.js: Change host to 'cse341-week5project.onrender.com' and schemes to ['https']
+- [ ] Run node swagger.js to regenerate swagger.json

@@ -6,8 +6,8 @@ const doc = {
     description: 'API for logging fly fishing catches',
     version: '1.0.0'
   },
-  host: 'localhost:8080',
-  schemes: ['http'],
+  host: 'cse341-week5project.onrender.com',
+  schemes: ['https'],
 
   definitions: {
     Fish: {
